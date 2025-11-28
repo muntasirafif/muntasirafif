@@ -1,0 +1,31 @@
+#include <stdio.h>
+#define M 100
+
+int s[M], t = -1;
+
+void push(int x){ s[++t] = x; }
+int pop(){ return s[t--]; }
+
+void insB(int x){
+    if(t < 0){ push(x); return; }
+    int y = pop();
+    insB(x);
+    push(y);
+}
+
+void rev(){
+    if(t < 0) return;
+    int x = pop();
+    rev();
+    insB(x);
+}
+
+int main(){
+    int n, x;
+    scanf("%d", &n);
+    while(n--){ scanf("%d", &x); push(x); }
+
+    rev();
+
+    while(t >= 0) printf("%d ", pop());
+}
